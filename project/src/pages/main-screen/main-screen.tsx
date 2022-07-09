@@ -5,15 +5,10 @@ type MainScreenProps = {
 }
 
 export default function MainScreen({placeCardsCount}: MainScreenProps): JSX.Element {
-  const createPlaceCardsTemplate = (): JSX.Element[] => {
-    const placeCards = [];
-
-    for (let i = 0; i < placeCardsCount; i++) {
-      placeCards.push(<PlaceCard />);
-    }
-
-    return placeCards;
-  };
+  const placeCardsList = Array.from(
+    {length: placeCardsCount},
+    (v, k) => <PlaceCard key={k}/>
+  );
 
   return (
     <div className="page page--gray page--main">
@@ -125,7 +120,7 @@ export default function MainScreen({placeCardsCount}: MainScreenProps): JSX.Elem
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {createPlaceCardsTemplate()}
+                {placeCardsList}
               </div>
             </section>
             <div className="cities__right-section">
