@@ -9,7 +9,7 @@ type MainScreenProps = {
 export default function MainScreen({propertyCardsCount}: MainScreenProps): JSX.Element {
   const propertyCardsList = Array.from(
     {length: propertyCardsCount},
-    (v, k) => <PlaceCard key={k}/>
+    (_, k) => <PlaceCard key={k}/>
   );
 
   return (
