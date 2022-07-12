@@ -1,0 +1,26 @@
+.error-container {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.error-content {
+  text-align: center;
+}
+
+.error-code {
+  margin-bottom: 0px;
+  font-size: 10rem;
+}
+
+.error-text {
+  margin-bottom: 50px;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+.home-link {
+  text-decoration: underline;
+}
