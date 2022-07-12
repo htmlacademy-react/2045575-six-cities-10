@@ -1,12 +1,12 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCard from '../../components/property-card/property-card';
 
 type MainScreenProps = {
-  placeCardsCount: number;
+  propertyCardsCount: number;
 }
 
-export default function MainScreen({placeCardsCount}: MainScreenProps): JSX.Element {
-  const placeCardsList = Array.from(
-    {length: placeCardsCount},
+export default function MainScreen({propertyCardsCount}: MainScreenProps): JSX.Element {
+  const propertyCardsList = Array.from(
+    {length: propertyCardsCount},
     (v, k) => <PlaceCard key={k}/>
   );
 
@@ -120,7 +120,7 @@ export default function MainScreen({placeCardsCount}: MainScreenProps): JSX.Elem
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {placeCardsList}
+                {propertyCardsList}
               </div>
             </section>
             <div className="cities__right-section">
