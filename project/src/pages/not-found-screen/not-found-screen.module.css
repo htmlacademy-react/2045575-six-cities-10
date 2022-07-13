@@ -1,0 +1,26 @@
+.container {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.content {
+  text-align: center;
+}
+
+.code {
+  margin-bottom: 0;
+  font-size: 10rem;
+}
+
+.text {
+  margin-bottom: 50px;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+.home {
+  text-decoration: underline;
+}
