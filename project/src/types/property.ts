@@ -34,3 +34,5 @@ export type Property = {
   title: string;
   type: string;
 };
+
+export type Properties = Property[];

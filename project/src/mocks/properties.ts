@@ -1,6 +1,6 @@
 import { Property } from '../types/property';
 
-export const offers: Property[] = [
+export const properties: Property[] = [
   {
     bedrooms: 3,
     city: {
@@ -33,10 +33,10 @@ export const offers: Property[] = [
       zoom: 8
     },
     maxAdults: 4,
-    previewImage: 'img/1.png',
+    previewImage: 'img/apartment-01.jpg',
     price: 120,
-    rating: 4.8,
-    title: 'Beautiful & luxurious studio at great location',
+    rating: 3.8,
+    title: 'Beautiful & at great location',
     type: 'apartment'
   },
   {
@@ -71,11 +71,11 @@ export const offers: Property[] = [
       zoom: 8
     },
     maxAdults: 4,
-    previewImage: 'img/2.png',
+    previewImage: 'img/apartment-02.jpg',
     price: 240,
-    rating: 4.8,
-    title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment'
+    rating: 1.8,
+    title: ' & luxurious great location',
+    type: 'private room'
   },
   {
     bedrooms: 3,
@@ -109,11 +109,11 @@ export const offers: Property[] = [
       zoom: 8
     },
     maxAdults: 4,
-    previewImage: 'img/3.png',
+    previewImage: 'img/apartment-03.jpg',
     price: 360,
-    rating: 4.8,
-    title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment'
+    rating: 0.8,
+    title: 'cation',
+    type: 'hotel'
   },
   {
     bedrooms: 3,
@@ -147,10 +147,10 @@ export const offers: Property[] = [
       zoom: 8
     },
     maxAdults: 4,
-    previewImage: 'img/4.png',
+    previewImage: 'img/apartment-02.jpg',
     price: 480,
-    rating: 4.8,
-    title: 'Beautiful & luxurious studio at great location',
+    rating: 2.8,
+    title: 'luxurious great',
     type: 'apartment'
   }
 ];
