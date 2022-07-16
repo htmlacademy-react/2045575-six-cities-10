@@ -1,32 +1,32 @@
-export type OfferLocation = {
+export type PropertyLocation = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
 
-export type OfferCity = {
-  location: OfferLocation;
+export type PropertyCity = {
+  location: PropertyLocation;
   name: string;
 };
 
-export type OfferHost = {
+export type PropertyHost = {
   avatarUrl: string
   id: number
   isPro: boolean
   name: string
 }
 
-export type Offer = {
+export type Property = {
   bedrooms: number;
-  city: OfferCity;
+  city: PropertyCity;
   description: string;
   goods: [string];
-  host: OfferHost;
+  host: PropertyHost;
   id: number;
   images: [string];
   isFavorite: boolean;
   isPremium: boolean;
-  location: OfferLocation;
+  location: PropertyLocation;
   maxAdults: number;
   previewImage: string;
   price: number;
