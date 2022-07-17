@@ -1,26 +1,17 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, CardClassName, ImageSize} from '../../const';
 import { Property } from '../../types/property';
 
 const ONE_STAR_PERCENTAGE = 20;
 
 type PropertyCardProps = {
-  property: Property
+  property: Property;
+  cardClassName: keyof typeof ImageSize
 };
 
-export default function PropertyCard({property}: PropertyCardProps): JSX.Element {
+export default function PropertyCard({property, cardClassName}: PropertyCardProps): JSX.Element {
   const {
-    // city,
-    // host,
-    // location,
-    // bedrooms,
-    // description,
-    // goods,
-    // id,
-    // images,
-    // isFavorite,
-    // isPremium,
-    // maxAdults,
+    isPremium,
     previewImage,
     price,
     rating,
@@ -29,23 +20,28 @@ export default function PropertyCard({property}: PropertyCardProps): JSX.Element
 
   const getRatingPercentage = (): string => `${rating * ONE_STAR_PERCENTAGE}%`;
 
-  return (
-    <article className="cities__card place-card">
+  const createPremiumMark = (): JSX.Element | null => (
+    isPremium ?
       <div className="place-card__mark">
         <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      </div> : null
+  );
+
+  return (
+    <article className={`${cardClassName}__card place-card`}>
+      {createPremiumMark()}
+      <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
         <Link to={AppRoute.Property}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={260}
-            height={200}
+            width={ImageSize[cardClassName].width}
+            height={ImageSize[cardClassName].height}
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`place-card__info ${cardClassName === CardClassName.Favorites && 'favorites__card-info'}`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{price}</b>

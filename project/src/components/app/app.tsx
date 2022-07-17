@@ -9,11 +9,12 @@ import PrivateRoute from '../private-route/private-route';
 import { Properties } from '../../types/property';
 
 type AppProps = {
-  propertyCardsCount: number;
   properties: Properties
 }
 
-export default function App({propertyCardsCount, properties}: AppProps): JSX.Element {
+export default function App({properties}: AppProps): JSX.Element {
+  const getFavoriteProperties = () => properties.filter(({isFavorite}) => isFavorite);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +32,7 @@ export default function App({propertyCardsCount, properties}: AppProps): JSX.Ele
             <PrivateRoute
               authorizationStatus={AutorizationStatus.Auth}
             >
-              <FavoritesScreen />
+              <FavoritesScreen favoriteProperties={getFavoriteProperties()}/>
             </PrivateRoute>
           }
         />

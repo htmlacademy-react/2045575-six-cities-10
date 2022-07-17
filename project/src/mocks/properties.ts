@@ -1,6 +1,6 @@
-import { Property } from '../types/property';
+import { Properties } from '../types/property';
 
-export const properties: Property[] = [
+export const properties: Properties = [
   {
     bedrooms: 3,
     city: {
@@ -25,8 +25,8 @@ export const properties: Property[] = [
     images: [
       'img/1.png'
     ],
-    isFavorite: true,
-    isPremium: false,
+    isFavorite: false,
+    isPremium: true,
     location: {
       latitude: 52.35514938496378,
       longitude: 4.673877537499948,
@@ -47,7 +47,7 @@ export const properties: Property[] = [
         longitude: 4.895168,
         zoom: 10
       },
-      name: 'Amsterdam'
+      name: 'Anapa'
     },
     description: 'A quiet Amsterdam.',
     goods: [
@@ -140,7 +140,7 @@ export const properties: Property[] = [
       'img/4.png'
     ],
     isFavorite: true,
-    isPremium: false,
+    isPremium: true,
     location: {
       latitude: 52.35514938496378,
       longitude: 4.673877537499948,
