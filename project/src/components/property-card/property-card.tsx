@@ -6,11 +6,16 @@ const ONE_STAR_PERCENTAGE = 20;
 
 type PropertyCardProps = {
   property: Property;
-  cardClassName: keyof typeof ImageSize
+  cardClassName: keyof typeof ImageSize;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  activeCardId: number | null;
 };
 
-export default function PropertyCard({property, cardClassName}: PropertyCardProps): JSX.Element {
+export default function PropertyCard(props: PropertyCardProps): JSX.Element {
+  const {property, cardClassName, activeCardId, onMouseEnter, onMouseLeave} = props;
   const {
+    id,
     isPremium,
     previewImage,
     price,
@@ -27,8 +32,16 @@ export default function PropertyCard({property, cardClassName}: PropertyCardProp
       </div> : null
   );
 
+  const getActivatedCardBorderStyle = () => {
+    if (activeCardId === id) {
+      return {
+        border: '1px solid black'
+      };
+    }
+  };
+
   return (
-    <article className={`${cardClassName}__card place-card`}>
+    <article className={`${cardClassName}__card place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={getActivatedCardBorderStyle()}>
       {createPremiumMark()}
       <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
         <Link to={AppRoute.Property}>

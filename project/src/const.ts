@@ -1,17 +1,17 @@
-export enum AppRoute {
+export const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
   Property = '/room'
 }
 
-export enum AutorizationStatus {
+export const enum AutorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
 
-export enum CardClassName {
+export const enum CardClassName {
   Favorites = 'favorites',
   Cities = 'cities'
 }
@@ -26,4 +26,3 @@ export const ImageSize = {
     height: 200
   }
 } as const;
-

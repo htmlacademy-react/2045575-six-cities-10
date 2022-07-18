@@ -13,7 +13,10 @@ export default function FavoritesScreen({favoriteProperties}: FavoriteScreenProp
   const uniquePropertyLists: Map<string, Properties> = new Map();
 
   for (const uniqueCity of uniqueCities) {
-    uniquePropertyLists.set(uniqueCity, favoriteProperties.filter(({city}) => city.name === uniqueCity));
+    uniquePropertyLists.set(
+      uniqueCity,
+      favoriteProperties.filter(({city}) => city.name === uniqueCity)
+    );
   }
 
   return (

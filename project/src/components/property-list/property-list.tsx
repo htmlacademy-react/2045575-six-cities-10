@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ImageSize } from '../../const';
 import { Properties } from '../../types/property';
 import PropertyCard from '../property-card/property-card';
@@ -8,10 +9,19 @@ type PropertyListProps = {
 }
 
 export default function PropertyList({properties, cardClassName}: PropertyListProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
   return (
     <>
       {properties.map((property) => (
-        <PropertyCard key={property.id} property={property} cardClassName={cardClassName}/>
+        <PropertyCard
+          key={property.id}
+          property={property}
+          activeCardId={activeCardId}
+          onMouseEnter={() => setActiveCardId(property.id)}
+          onMouseLeave={() => setActiveCardId(null)}
+          cardClassName={cardClassName}
+        />
       )
       )}
     </>
