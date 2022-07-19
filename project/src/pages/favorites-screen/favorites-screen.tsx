@@ -8,16 +8,23 @@ type FavoriteScreenProps = {
   favoriteProperties: Properties
 }
 
-export default function FavoritesScreen({favoriteProperties}: FavoriteScreenProps): JSX.Element {
-  const uniqueCities: string[] = [...new Set(favoriteProperties.map(({city}) => city.name))];
-  const uniquePropertyLists: Map<string, Properties> = new Map();
+type GroupedProperties = {
+  [key: string]: Properties;
+}
 
-  for (const uniqueCity of uniqueCities) {
-    uniquePropertyLists.set(
-      uniqueCity,
-      favoriteProperties.filter(({city}) => city.name === uniqueCity)
-    );
-  }
+export default function FavoritesScreen({favoriteProperties}: FavoriteScreenProps): JSX.Element {
+  const groupedProperties = favoriteProperties.reduce<GroupedProperties>(
+    (acc, property) => {
+      const {city} = property;
+
+      if (!acc[city.name]) {
+        acc[city.name] = [];
+      }
+
+      acc[city.name].push(property);
+
+      return acc;
+    }, {});
 
   return (
     <div className="page">
@@ -47,7 +54,7 @@ export default function FavoritesScreen({favoriteProperties}: FavoriteScreenProp
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {Array.from(uniquePropertyLists).map(([city, properties]) => (
+              {Object.entries(groupedProperties).map(([city, properties]) => (
                 <li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">

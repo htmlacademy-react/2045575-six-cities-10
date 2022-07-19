@@ -1,19 +1,24 @@
-import { Link } from 'react-router-dom';
-import { AppRoute, CardClassName, ImageSize} from '../../const';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute, CardClassName, CardImageSize} from '../../const';
 import { Property } from '../../types/property';
 
-const ONE_STAR_PERCENTAGE = 20;
+const ONE_STAR_PERCENTAGE = 100 / 5;
 
 type PropertyCardProps = {
   property: Property;
-  cardClassName: keyof typeof ImageSize;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  cardClassName: keyof typeof CardImageSize;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   activeCardId: number | null;
 };
 
 export default function PropertyCard(props: PropertyCardProps): JSX.Element {
-  const {property, cardClassName, activeCardId, onMouseEnter, onMouseLeave} = props;
+  const {
+    property,
+    cardClassName,
+    activeCardId,
+    onMouseEnter,
+    onMouseLeave} = props;
   const {
     id,
     isPremium,
@@ -25,13 +30,6 @@ export default function PropertyCard(props: PropertyCardProps): JSX.Element {
 
   const getRatingPercentage = (): string => `${rating * ONE_STAR_PERCENTAGE}%`;
 
-  const createPremiumMark = (): JSX.Element | null => (
-    isPremium ?
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div> : null
-  );
-
   const getActivatedCardBorderStyle = () => {
     if (activeCardId === id) {
       return {
@@ -40,16 +38,26 @@ export default function PropertyCard(props: PropertyCardProps): JSX.Element {
     }
   };
 
+  generatePath(`${AppRoute.Property}/:id`, { id: `${id}`});
+
   return (
-    <article className={`${cardClassName}__card place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={getActivatedCardBorderStyle()}>
-      {createPremiumMark()}
+    <article
+      className={`${cardClassName}__card place-card`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      style={getActivatedCardBorderStyle()}
+    >
+      {isPremium &&
+      <div className="place-card__mark">
+        <span>Premium</span>
+      </div>}
       <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
-        <Link to={AppRoute.Property}>
+        <Link to={`${AppRoute.Property}/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={ImageSize[cardClassName].width}
-            height={ImageSize[cardClassName].height}
+            width={CardImageSize[cardClassName].width}
+            height={CardImageSize[cardClassName].height}
             alt="Place image"
           />
         </Link>
@@ -81,7 +89,7 @@ export default function PropertyCard(props: PropertyCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Property}>
+          <Link to={`${AppRoute.Property}/${id}`}>
             {title}
           </Link>
         </h2>

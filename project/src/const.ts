@@ -16,7 +16,7 @@ export const enum CardClassName {
   Cities = 'cities'
 }
 
-export const ImageSize = {
+export const CardImageSize = {
   favorites: {
     width: 150,
     height: 110

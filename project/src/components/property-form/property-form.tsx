@@ -1,26 +1,30 @@
 import { useState } from 'react';
-import React from 'react';
-import { NewReview } from '../../types/review';
+import { FormState, Ratings } from '../../types/property-form';
+import PropertyFormRating from '../property-form-rating/property-form-rating';
 
-const EmptyReview = {
-  Comment: '',
-  Rating: 0
-} as const;
+const ratings: Ratings = [
+  [5, 'perfect'],
+  [4, 'good'],
+  [3, 'not bad'],
+  [2, 'badly'],
+  [1, 'terribly']
+];
+
+const enum CommentLength {
+  Min = 50,
+  Max = 300
+}
 
 export default function PropertyForm() {
-  const [formData, setFormData] = useState<NewReview>(
+  const [formData, setFormData] = useState<FormState>(
     {
-      comment: EmptyReview.Comment,
-      rating: EmptyReview.Rating
+      comment: '',
+      rating: 0
     }
   );
 
-  const handleTextareaInput = (value: string): void => {
-    setFormData({...formData, comment: value});
-  };
-
-  const handleInputClick = (value: number): void => {
-    setFormData({...formData, rating: value});
+  const fieldChangeHandle = (name: string, value: number | string) => {
+    setFormData({...formData, [name]: value});
   };
 
   return (
@@ -29,99 +33,22 @@ export default function PropertyForm() {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          defaultValue={5}
-          id="5-stars"
-          type="radio"
-          onClick={({currentTarget}: React.MouseEvent<HTMLInputElement>) => handleInputClick(+currentTarget.value)}
-        />
-        <label
-          htmlFor="5-stars"
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          defaultValue={4}
-          id="4-stars"
-          type="radio"
-          onClick={({currentTarget}: React.MouseEvent<HTMLInputElement>) => handleInputClick(+currentTarget.value)}
-        />
-        <label
-          htmlFor="4-stars"
-          className="reviews__rating-label form__rating-label"
-          title="good"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          defaultValue={3}
-          id="3-stars"
-          type="radio"
-          onClick={({currentTarget}: React.MouseEvent<HTMLInputElement>) => handleInputClick(+currentTarget.value)}
-        />
-        <label
-          htmlFor="3-stars"
-          className="reviews__rating-label form__rating-label"
-          title="not bad"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          defaultValue={2}
-          id="2-stars"
-          type="radio"
-          onClick={({currentTarget}: React.MouseEvent<HTMLInputElement>) => handleInputClick(+currentTarget.value)}
-        />
-        <label
-          htmlFor="2-stars"
-          className="reviews__rating-label form__rating-label"
-          title="badly"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          defaultValue={1}
-          id="1-star"
-          type="radio"
-          onClick={({currentTarget}: React.MouseEvent<HTMLInputElement>) => handleInputClick(+currentTarget.value)}
-        />
-        <label
-          htmlFor="1-star"
-          className="reviews__rating-label form__rating-label"
-          title="terribly"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
+        {ratings.map(([value, title]) => (
+          <PropertyFormRating key={value} value={value} title={title} fieldChangeHandle={fieldChangeHandle}/>
+        )
+        )}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={''}
-        onInput={({currentTarget}) => handleTextareaInput(currentTarget.value)}
+        value={formData.comment}
+        onInput={(({currentTarget}) => {
+          const {name, value} = currentTarget;
+          fieldChangeHandle(name, value);
+        }
+        )}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -133,7 +60,11 @@ export default function PropertyForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={false}
+          disabled={
+            (formData.comment.length <= CommentLength.Min ||
+            formData.comment.length >= CommentLength.Max) &&
+            formData.rating === 0
+          }
         >
           Submit
         </button>
