@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { CardImageSize } from '../../const';
+import { CardClassName } from '../../const';
 import { Properties } from '../../types/property';
 import PropertyCard from '../property-card/property-card';
 
 type PropertyListProps = {
   properties: Properties;
-  cardClassName: keyof typeof CardImageSize;
+  cardClassName: CardClassName;
 }
 
 export default function PropertyList({properties, cardClassName}: PropertyListProps): JSX.Element {

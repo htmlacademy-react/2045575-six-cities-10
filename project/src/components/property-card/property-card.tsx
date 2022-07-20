@@ -6,7 +6,7 @@ const ONE_STAR_PERCENTAGE = 100 / 5;
 
 type PropertyCardProps = {
   property: Property;
-  cardClassName: keyof typeof CardImageSize;
+  cardClassName: CardClassName;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   activeCardId: number | null;
@@ -38,13 +38,11 @@ export default function PropertyCard(props: PropertyCardProps): JSX.Element {
     }
   };
 
-  generatePath(`${AppRoute.Property}/:id`, { id: `${id}`});
-
   return (
     <article
       className={`${cardClassName}__card place-card`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={() => onMouseEnter?.()}
+      onMouseLeave={() => onMouseLeave?.()}
       style={getActivatedCardBorderStyle()}
     >
       {isPremium &&
@@ -52,7 +50,7 @@ export default function PropertyCard(props: PropertyCardProps): JSX.Element {
         <span>Premium</span>
       </div>}
       <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Property}/${id}`}>
+        <Link to={ generatePath(AppRoute.Property, { id: `${id}`}) }>
           <img
             className="place-card__image"
             src={previewImage}
@@ -89,7 +87,7 @@ export default function PropertyCard(props: PropertyCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Property}/${id}`}>
+          <Link to={ generatePath(AppRoute.Property, { id: `${id}`}) }>
             {title}
           </Link>
         </h2>
