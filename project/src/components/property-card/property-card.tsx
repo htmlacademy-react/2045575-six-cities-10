@@ -1,27 +1,69 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute, CardClassName, CardImageSize} from '../../const';
+import { Property } from '../../types/property';
 
-export default function PropertyCard(): JSX.Element {
+const ONE_STAR_PERCENTAGE = 100 / 5;
+
+type PropertyCardProps = {
+  property: Property;
+  cardClassName: CardClassName;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  activeCardId: number | null;
+};
+
+export default function PropertyCard(props: PropertyCardProps): JSX.Element {
+  const {
+    property,
+    cardClassName,
+    activeCardId,
+    onMouseEnter,
+    onMouseLeave} = props;
+  const {
+    id,
+    isPremium,
+    previewImage,
+    price,
+    rating,
+    title,
+    type} = property;
+
+  const getRatingPercentage = (): string => `${rating * ONE_STAR_PERCENTAGE}%`;
+
+  const getActivatedCardBorderStyle = () => {
+    if (activeCardId === id) {
+      return {
+        border: '1px solid black'
+      };
+    }
+  };
+
   return (
-    <article className="cities__card place-card">
+    <article
+      className={`${cardClassName}__card place-card`}
+      onMouseEnter={() => onMouseEnter?.()}
+      onMouseLeave={() => onMouseLeave?.()}
+      style={getActivatedCardBorderStyle()}
+    >
+      {isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Room}>
+      </div>}
+      <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
+        <Link to={ generatePath(AppRoute.Property, { id: `${id}`}) }>
           <img
             className="place-card__image"
-            src="img/apartment-01.jpg"
-            width={260}
-            height={200}
+            src={previewImage}
+            width={CardImageSize[cardClassName].width}
+            height={CardImageSize[cardClassName].height}
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`place-card__info ${cardClassName === CardClassName.Favorites && 'favorites__card-info'}`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€120</b>
+            <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
@@ -40,16 +82,16 @@ export default function PropertyCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{ width: getRatingPercentage() }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Room}>
-            Beautiful &amp; luxurious apartment at great location
+          <Link to={ generatePath(AppRoute.Property, { id: `${id}`}) }>
+            {title}
           </Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

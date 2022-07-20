@@ -6,18 +6,21 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import { Properties } from '../../types/property';
 
 type AppProps = {
-  propertyCardsCount: number;
+  properties: Properties
 }
 
-export default function App({propertyCardsCount}: AppProps): JSX.Element {
+export default function App({properties}: AppProps): JSX.Element {
+  const getFavoriteProperties = () => properties.filter(({isFavorite}) => isFavorite);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen propertyCardsCount={propertyCardsCount}/>}
+          element={<MainScreen properties={properties}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -29,13 +32,13 @@ export default function App({propertyCardsCount}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AutorizationStatus.Auth}
             >
-              <FavoritesScreen />
+              <FavoritesScreen favoriteProperties={getFavoriteProperties()}/>
             </PrivateRoute>
           }
         />
         <Route
-          path={AppRoute.Room}
-          element={<PropertyScreen />}
+          path={AppRoute.Property}
+          element={<PropertyScreen/>}
         />
         <Route
           path="*"

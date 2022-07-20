@@ -1,17 +1,14 @@
 import Logo from '../../components/logo/logo';
-import PlaceCard from '../../components/property-card/property-card';
+import PropertyList from '../../components/property-list/property-list';
 import UserProfile from '../../components/user-profile/user-profile';
+import { CardClassName } from '../../const';
+import { Properties } from '../../types/property';
 
 type MainScreenProps = {
-  propertyCardsCount: number;
+  properties: Properties;
 }
 
-export default function MainScreen({propertyCardsCount}: MainScreenProps): JSX.Element {
-  const propertyCardsList = Array.from(
-    {length: propertyCardsCount},
-    (_, k) => <PlaceCard key={k}/>
-  );
-
+export default function MainScreen({properties}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -105,7 +102,7 @@ export default function MainScreen({propertyCardsCount}: MainScreenProps): JSX.E
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {propertyCardsList}
+                <PropertyList properties={properties} cardClassName={CardClassName.Cities}/>
               </div>
             </section>
             <div className="cities__right-section">
