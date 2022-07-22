@@ -1,14 +1,26 @@
+import { useState } from 'react';
+import LocationItemList from '../../components/location-item-list/location-item-list';
 import Logo from '../../components/logo/logo';
+import Map from '../../components/map/map';
 import PropertyList from '../../components/property-list/property-list';
 import UserProfile from '../../components/user-profile/user-profile';
 import { CardClassName } from '../../const';
-import { Properties } from '../../types/property';
+import { Properties, PropertyCity } from '../../types/property';
 
 type MainScreenProps = {
   properties: Properties;
 }
 
 export default function MainScreen({properties}: MainScreenProps): JSX.Element {
+  const [currentCity, setCurrentCity] = useState<PropertyCity>({
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168,
+      zoom: 10
+    },
+    name: 'Amsterdam'
+  });
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -37,36 +49,7 @@ export default function MainScreen({properties}: MainScreenProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              <LocationItemList properties={properties} currentCity={currentCity} onClick={(cityName: PropertyCity) => setCurrentCity(cityName)}/>
             </ul>
           </section>
         </div>
@@ -106,7 +89,12 @@ export default function MainScreen({properties}: MainScreenProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                {/* <Map /> */}
+                <Map currentCity={currentCity}
+                  currentProperties={properties.filter(({city}) => currentCity.name === city.name)}
+                />
+              </section>
             </div>
           </div>
         </div>

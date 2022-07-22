@@ -26,3 +26,18 @@ export const CardImageSize = {
     height: 200
   }
 } as const;
+
+export const DEFAULT_CITY = {
+  location: {
+    latitude: 52.370216,
+    longitude: 4.895168,
+    zoom: 10
+  },
+  name: 'Amsterdam'
+} as const;
+
+export const URL_MARKER_DEFAULT =
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+
+export const URL_MARKER_CURRENT =
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
