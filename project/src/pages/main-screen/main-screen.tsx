@@ -90,7 +90,6 @@ export default function MainScreen({properties}: MainScreenProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                {/* <Map /> */}
                 <Map currentCity={currentCity}
                   currentProperties={properties.filter(({city}) => currentCity.name === city.name)}
                 />
