@@ -43,11 +43,11 @@ export const properties: Properties = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 44.532702,
-        longitude: 38.192604,
-        zoom: 13
+        latitude: 48.843610000000005,
+        longitude: 2.338499,
+        zoom: 16
       },
-      name: 'Gelendzhik'
+      name: 'Paris'
     },
     description: 'A quiet Amsterdam.',
     goods: [
@@ -66,9 +66,9 @@ export const properties: Properties = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 44.532702,
-      longitude: 38.192604,
-      zoom: 8
+      latitude: 48.843610000000005,
+      longitude: 2.338499,
+      zoom: 16
     },
     maxAdults: 4,
     previewImage: 'img/apartment-02.jpg',

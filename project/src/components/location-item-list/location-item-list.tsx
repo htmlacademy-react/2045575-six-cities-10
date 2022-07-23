@@ -1,31 +1,24 @@
-import { Properties, PropertyCity } from '../../types/property';
+import { Cities } from '../../const';
+import { PropertyCity } from '../../types/property';
 import LocationItem from '../location-item/location-item';
 
 type LocationItemListProps = {
-  properties: Properties;
   onClick: (city: PropertyCity) => void;
   currentCity: PropertyCity;
 }
 
-type UniqueCities = {
-  [key: string]: PropertyCity;
-}
-
-export default function LocationItemList({properties, onClick, currentCity}: LocationItemListProps): JSX.Element {
-
-  const uniqueCities = properties.reduce<UniqueCities>((acc, {city}) => {
-    if (!acc[city.name]) {
-      acc[city.name] = city;
-    }
-
-    return acc;
-  }, {});
+export default function LocationItemList({onClick, currentCity}: LocationItemListProps): JSX.Element {
 
   return (
     <>
-      {Object.values(uniqueCities)
+      {Cities
         .map((city) => (
-          <LocationItem key={city.name} city={city} onClick={onClick} currentCity={currentCity}/>
+          <LocationItem
+            key={city.name}
+            city={city}
+            onClick={onClick}
+            currentCity={currentCity}
+          />
         )
         )}
     </>

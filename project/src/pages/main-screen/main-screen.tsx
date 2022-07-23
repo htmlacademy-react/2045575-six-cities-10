@@ -4,7 +4,7 @@ import Logo from '../../components/logo/logo';
 import Map from '../../components/map/map';
 import PropertyList from '../../components/property-list/property-list';
 import UserProfile from '../../components/user-profile/user-profile';
-import { CardClassName } from '../../const';
+import { CardClassName, DEFAULT_CITY, MapContainerClassName } from '../../const';
 import { Properties, PropertyCity } from '../../types/property';
 
 type MainScreenProps = {
@@ -12,14 +12,7 @@ type MainScreenProps = {
 }
 
 export default function MainScreen({properties}: MainScreenProps): JSX.Element {
-  const [currentCity, setCurrentCity] = useState<PropertyCity>({
-    location: {
-      latitude: 52.370216,
-      longitude: 4.895168,
-      zoom: 10
-    },
-    name: 'Amsterdam'
-  });
+  const [currentCity, setCurrentCity] = useState<PropertyCity>(DEFAULT_CITY);
 
   return (
     <div className="page page--gray page--main">
@@ -49,7 +42,7 @@ export default function MainScreen({properties}: MainScreenProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <LocationItemList properties={properties} currentCity={currentCity} onClick={(cityName: PropertyCity) => setCurrentCity(cityName)}/>
+              <LocationItemList currentCity={currentCity} onClick={(city: PropertyCity) => setCurrentCity(city)}/>
             </ul>
           </section>
         </div>
@@ -89,11 +82,11 @@ export default function MainScreen({properties}: MainScreenProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map currentCity={currentCity}
-                  currentProperties={properties.filter(({city}) => currentCity.name === city.name)}
-                />
-              </section>
+              <Map
+                containerClassName={MapContainerClassName.City}
+                currentCity={currentCity}
+                currentProperties={properties.filter(({city}) => currentCity.name === city.name)}
+              />
             </div>
           </div>
         </div>

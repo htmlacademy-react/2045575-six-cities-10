@@ -1,46 +1,52 @@
 import { Properties, PropertyCity } from '../../types/property';
-import {useRef, useEffect} from 'react';
-import {Marker, Icon, LatLngExpression} from 'leaflet';
-import useMap from '../../hooks/useMap';
-import {URL_MARKER_DEFAULT} from '../../const';
+import {useRef, useEffect, useMemo} from 'react';
+import {Marker, Icon, LayerGroup} from 'leaflet';
+import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
+import { MapContainerClassName } from '../../const';
 
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconUrl: 'img/pin.svg',
+  iconAnchor: [19.5, 39]
 });
 
 type MapProps = {
   currentCity: PropertyCity;
   currentProperties: Properties;
+  containerClassName: MapContainerClassName;
 };
 
-const prevMarkers: Marker<LatLngExpression>[] = [];
-
-export default function Map({currentCity, currentProperties}: MapProps): JSX.Element {
+export default function Map({currentCity, currentProperties, containerClassName}: MapProps): JSX.Element {
   const {location: cityLocation} = currentCity;
   const mapRef = useRef(null);
+  const markerGroup = useMemo(() => new LayerGroup(), []);
+  const markerGroupRef = useRef(markerGroup);
   const map = useMap(mapRef, cityLocation);
 
   useEffect(() => {
     if (map) {
-      if (prevMarkers.length) {
-        prevMarkers.forEach((marker) => {
-          map.removeLayer(marker);
-        });
-      }
+      markerGroupRef.current.clearLayers();
+      markerGroup.addTo(map);
+
       currentProperties.forEach(({location: point}) => {
-        const marker = new Marker<LatLngExpression>({
+        const marker = new Marker({
           lat: point.latitude,
           lng: point.longitude
         });
         marker.setIcon(defaultCustomIcon)
-          .addTo(map);
-        prevMarkers.push(marker);
+          .addTo(markerGroup);
       });
-    }
-  }, [map, currentProperties]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+      markerGroupRef.current = markerGroup;
+    }
+  }, [map, currentProperties, markerGroup]);
+
+  return (
+    <section
+      className={`${containerClassName} map`}
+      style={{height: '100%'}}
+      ref={mapRef}
+    >
+    </section>
+  );
 }
